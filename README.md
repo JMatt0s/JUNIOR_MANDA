@@ -1,26 +1,24 @@
-# 🎟️ Sistema de Boletería - Junior de Barranquilla
+# 🚩 Junior de Barranquilla
 
-Sistema de boletería por consola desarrollado en **Python** para la venta de entradas a los partidos del Club Deportivo Popular Junior F.C. como proyecto universitario.
+Proyecto de consola desarrollado en **Python** principalmente para la venta de entradas a los partidos del Club Deportivo Popular Junior F.C. Es un proyecto universitario originalmente. Ahora un proyecto apasionado al tiburón.   
 
 > 🦈 *¡Junior Manda!*
 
 ---
 
-## 📋 Descripción
+## 📋 Descripción del proyecto original
 
-Este proyecto permite simular la gestión y venta de boletas para partidos de Junior en el Estadio Metropolitano Roberto Meléndez. Desde una interfaz de consola, el usuario puede consultar los partidos disponibles, elegir una localidad, comprar boletas y revisar o cancelar sus compras.
+Este proyecto originalmente permite simular la gestión y venta de boletas para partidos de Junior en el Estadio Metropolitano Roberto Meléndez o Estadio Municipal Romelio Martínez. Desde una interfaz de consola, el usuario puede consultar los partidos disponibles (aun en desarrollo), elegir una localidad, comprar boletas y revisar o cancelar sus compras.
 
 ## ✨ Funcionalidades
 
-- Ver la lista de partidos disponibles (rival, fecha y hora).
-- Consultar localidades, precios y disponibilidad de cupos.
-- Comprar boletas para un partido y una localidad.
+- Ver la lista de partidos disponibles (rival, fecha y hora) (AUN EN DESARROLLO). 
+- Consultar localidades y precios.
 - Calcular el valor total de la compra.
-- Ver el historial de compras realizadas.
+- Ver el historial de compras realizadas (aun en desarrollo).
 - Cancelar una compra (devuelve los cupos a la localidad).
-- Menú interactivo por consola.
 
-## 🏟️ Localidades de ejemplo
+## 🏟️ Localidad Estadio Metropolitano Roberto Meléndez
 
 | Localidad  | Precio (COP) | Capacidad |
 |------------|--------------|-----------|
@@ -28,6 +26,14 @@ Este proyecto permite simular la gestión y venta de boletas para partidos de Ju
 | Sur        | $30.000      | x        |
 | Oriental   | $50.000      | x        |
 | Occidental | $100.000     | x        |
+
+## 🏟️ Localidades Estadio Municipal Romelio Martínez
+
+| Localidad  | Precio (COP) | Capacidad |
+|------------|--------------|-----------|
+| Norte      | $30.000      | 3464     |
+| Oriental   | $50.000      | 2612     |
+| Occidental | $100.000     | 2500     |
 
 > Los valores son de ejemplo y se pueden modificar en el código.
 
@@ -42,15 +48,13 @@ Este proyecto permite simular la gestión y venta de boletas para partidos de Ju
 ```
 boleteria-junior/
 │
-├── main.py            # Punto de entrada y menú principal
+├── inicio.py            # Punto de entrada y menú principal
 ├── partidos.py        # Gestión de partidos
-├── boletas.py         # Lógica de compra y cancelación
+├── Junior_boleteria.py    # Compra de boletas
 ├── datos/
 │   └── datos.json     # Almacenamiento de partidos y compras (opcional)
 └── README.md
 ```
-
-> Ajusta esta estructura según los archivos reales de tu proyecto. Si todo está en un solo archivo, basta con `main.py`.
 
 ## 🚀 Instalación y ejecución
 
@@ -70,7 +74,7 @@ boleteria-junior/
 3. Ejecuta el programa:
 
    ```bash
-   python main.py
+   python inicio.py
    ```
 
 ## 💻 Ejemplo de uso
@@ -97,25 +101,21 @@ Seleccione una opción: 1
 - Estructuras de control (`if`, `while`, `for`)
 - Validación de entradas del usuario
 - Manejo de errores con `try / except`
-- (Opcional) Programación orientada a objetos y manejo de archivos JSON
+- Programación orientada a objetos y manejo de archivos JSON
 
 ## 🔮 Mejoras futuras
 
 - Registro e inicio de sesión de usuarios.
-- Generación de un comprobante de compra en archivo `.txt`.
+- Calendario de partidos.
 - Descuentos para abonados.
 - Interfaz gráfica o versión web.
 - Conexión a una base de datos.
+- ## NOTA: A medida que desarrollo este proyecto habrá mejoras significativa  
 
-## 👥 Autores
+## 👥 Autor
 
-- **Nombre Apellido** - [@usuario](https://github.com/usuario)
-- **Nombre Apellido** - [@usuario](https://github.com/usuario)
-
-**Universidad:** Nombre de la universidad
-**Materia:** Programación - Laboratorio de Programacion
-**Docente:** Ruiz Botero Wilmer Hernan
-**Año:** 2026 - 2
+- 📸**IG** - @mattoss99_ https://www.instagram.com/mattoss99_/
+- **Juan Mattos** - @JMatt0s https://github.com/usuario](https://github.com/JMatt0s
 
 ## 📄 Licencia
 

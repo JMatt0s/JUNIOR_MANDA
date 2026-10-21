@@ -15,6 +15,7 @@ Este proyecto originalmente permite simular la gestión y venta de boletas para 
 - Ver la lista de partidos disponibles (rival, fecha y hora) (AUN EN DESARROLLO). 
 - Consultar localidades y precios.
 - Calcular el valor total de la compra.
+- Calculadora de resultados.
 - Ver el historial de compras realizadas (aun en desarrollo).
 - Cancelar una compra (devuelve los cupos a la localidad).
 

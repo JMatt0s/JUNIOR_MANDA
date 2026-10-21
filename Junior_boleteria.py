@@ -18,36 +18,69 @@ def simular_pago_pse(total):
         "10": "Nequi"
     }
 
-    print("\n=== Pago PSE (DEMO) ===")
-    print("No ingreses credenciales reales. Estos bancos y este inicio de sesion son ficticios.")
+    referencia = f"PSE-{secrets.token_hex(4).upper()}"
+    print("\n=== Inicio de pago PSE ===")
+    print(f"Referencia de prueba: {referencia}")
+    print(f"Valor de la compra: ${total:,}")
+
+    print("\nTipo de pagador:")
+    print("1. Persona natural")
+    print("2. Persona juridica")
+    tipo_pagador = input("Elige una opcion: ")
+    if tipo_pagador == "1":
+        nombre_pagador = "persona natural"
+        tipos_documento = {"1": "CC", "2": "CE", "3": "Pasaporte"}
+    elif tipo_pagador == "2":
+        nombre_pagador = "persona juridica"
+        tipos_documento = {"1": "NIT"}
+    else:
+        print("Tipo de pagador no valido. La solicitud no fue creada.")
+        return "ERROR"
+
+    print("\nTipo de documento:")
+    for opcion, tipo_documento in tipos_documento.items():
+        print(f"{opcion}. {tipo_documento}")
+    tipo_documento = tipos_documento.get(input("Elige una opcion: "))
+    if tipo_documento is None:
+        print("Tipo de documento no valido. La solicitud no fue creada.")
+        return "ERROR"
+
+    documento = input(f"Numero de {tipo_documento}: ").strip()
+    correo = input("Correo para notificaciones: ").strip()
+    if not documento or "@" not in correo or correo.startswith("@") or correo.endswith("@"):
+        print("Datos de prueba no validos. La solicitud no fue creada.")
+        return "ERROR"
+    
     for opcion, banco in bancos.items():
         print(f"{opcion}. {banco}")
 
     banco_seleccionado = bancos.get(input("Selecciona un banco: "))
     if banco_seleccionado is None:
-        print("Banco no valido.")
-        return False
+        print("Entidad no valida. La solicitud no fue creada.")
+        return "ERROR"
 
-    print(f"\n=== Inicio de sesion: {banco_seleccionado} ===")
-    usuario = input("Usuario ficticio: ")
-    contrasena = getpass("Contrasena ficticia: ")
-    if not usuario.strip() or not contrasena:
-        print("Ingresa un usuario y una contrasena ficticios para continuar.")
-        return False
+    print(f"\nSolicitud {referencia} creada para {banco_seleccionado}.")
+    print(f"Pagador: {nombre_pagador}; documento: {tipo_documento}.")
+    print(f"Notificaciones: {correo}")
+    print("1. Aprobado")
+    print("2. Rechazado")
+    print("3. Pendiente de confirmacion")
+    print("4. Cancelado por el pagador")
+    resultados = {
+        "1": "APROBADO",
+        "2": "RECHAZADO",
+        "3": "PENDIENTE",
+        "4": "CANCELADO",
+    }
+    estado = resultados.get(input("Elige una opcion: "))
+    if estado is None:
+        print(f"Estado: ERROR. Referencia: {referencia}.")
+        return "ERROR"
 
-    print(f"\nConfirma el pago simulado de ${total}.")
-    print("1. Autorizar pago")
-    print("2. Rechazar pago")
-    autorizacion = input("Elige una opcion: ")
-    if autorizacion == "1":
-        print("Pago PSE autorizado (simulacion; no se realizo ningun cobro).")
-        return True
-    elif autorizacion == "2":
-        print("Pago PSE rechazado.")
-    else:
-        print("Opcion no valida. No se autorizo el pago.")
-    return False
-
+    print(f"Estado PSE: {estado}. Referencia: {referencia}.")
+    if estado == "PENDIENTE":
+        print("En una integracion real, consulta el estado en la pasarela antes de entregar el servicio.")
+    return estado
 
 def generar_factura(localidad, cantidad, total):
     fecha = datetime.now()
@@ -63,9 +96,7 @@ def generar_factura(localidad, cantidad, total):
         archivo.write(f"Cantidad de boletas: {cantidad}\n")
         archivo.write(f"Precio por boleta: ${precio[localidad]:,}\n")
         archivo.write(f"Total: ${total:,}\n")
-        archivo.write("Estado: compra simulada; no es comprobante de pago real.\n")
     print(f"Factura guardada en: {nombre_archivo}")
-
 
 while True:
     print("\n=== ¡Junior Manda! ===")
@@ -122,7 +153,6 @@ while True:
                     continue
 
             print(f"\n=== Datos de tarjeta de {nombre_tarjeta} ===")
-            print("DEMO: no ingreses datos reales; este programa no procesa pagos.")
             numero_tarjeta = getpass("Numero de tarjeta: ")
             mes_vencimiento = input("Mes de vencimiento (MM): ")
             year_vencimiento = input("Año de vencimiento (AAAA): ")
@@ -141,29 +171,28 @@ while True:
                 print("Datos de tarjeta no validos.")
                 continue
 
-            print(f"Pago simulado con tarjeta de {nombre_tarjeta}.")
+            print(f"Pago con tarjeta de {nombre_tarjeta}.")
             pago_confirmado = True
         case "2":
             print("\n=== Pago con Nequi ===")
-            print("DEMO: no ingreses tu numero real; este programa no procesa pagos.")
             telefono_nequi = input("Numero de celular registrado en Nequi (+57): ")
             telefono_limpio = telefono_nequi.replace(" ", "").replace("-", "")
             if not telefono_limpio.isdigit() or len(telefono_limpio) != 10 or not telefono_limpio.startswith("3"):
                 print("Ingresa un numero celular de 10 digitos.")
                 continue
             print("Solicitud de pago Nequi.")
-            print("1. Confirmar pago simulado")
+            print("1. Confirmar pago")
             print("2. No se realizo el pago")
             pago_confirmado = input("Elige una opcion: ") == "1"
             if pago_confirmado:
-                print("Pago Nequi confirmado (simulacion; no se realizo ningun cobro).")
+                print("Pago Nequi confirmado.")
             else:
                 print("Pago Nequi no confirmado.")
         case "3":
-            pago_confirmado = simular_pago_pse(total)
+            estado_pse = simular_pago_pse(total)
+            pago_confirmado = estado_pse == "APROBADO"
         case "4":
-            print("\n=== Pago con llave Bre-B (DEMO) ===")
-            print("DEMO: no ingreses una llave real; este programa no procesa pagos.")
+            print("\n=== Pago con llave Bre-B ===")
             llave = input("Digite la llave: ")
                 
             if llave:
@@ -180,12 +209,12 @@ while True:
                 print("La llave ingresada no tiene un formato valido.")
                 continue
 
-            print(f"Confirma el pago simulado de ${total}.")
+            print(f"Confirma el pago de ${total}.")
             print("1. Confirmar pago")
             print("2. Cancelar")
             pago_confirmado = input("Elige una opcion: ") == "1"
             if pago_confirmado:
-                print("Pago Bre-B confirmado (simulacion; no se realizo ningun cobro).")
+                print("Pago Bre-B confirmado.")
             else:
                 print("Pago Bre-B no confirmado.")
         case _:
